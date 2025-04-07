@@ -7,12 +7,13 @@ class Subject:
         self.max_hr = None
 
     def estimate_max_hr(self):
-        """Estimate the maximum heart rate using the formula: 220 - age"""
         self.max_hr = 220 - self.age
-        return self.max_hr
 
-    def __str__(self):
-        return f"Subject: {self.first_name} {self.last_name}, Sex: {self.sex}, Age: {self.age}, Max HR: {self.max_hr}"
+    def print_info(self):
+        print("Subject:", self.first_name, self.last_name)
+        print("Sex:", self.sex)
+        print("Age:", self.age)
+        print("Max HR:", self.max_hr)
 
 
 class Supervisor:
@@ -20,8 +21,8 @@ class Supervisor:
         self.first_name = first_name
         self.last_name = last_name
 
-    def __str__(self):
-        return f"Supervisor: {self.first_name} {self.last_name}"
+    def print_info(self):
+        print("Supervisor:", self.first_name, self.last_name)
 
 
 class Experiment:
@@ -37,7 +38,13 @@ class Experiment:
     def add_supervisor(self, supervisor):
         self.supervisors.append(supervisor)
 
-    def __str__(self):
-        subject_info = "\n".join(str(s) for s in self.subjects)
-        supervisor_info = "\n".join(str(s) for s in self.supervisors)
-        return f"Experiment: {self.name} on {self.date}\nSupervisors:\n{supervisor_info}\nSubjects:\n{subject_info}"
+    def print_info(self):
+        print("Experiment:", self.name)
+        print("Date:", self.date)
+        print("\nSupervisors:")
+        for sup in self.supervisors:
+            sup.print_info()
+        print("\nSubjects:")
+        for sub in self.subjects:
+            sub.print_info()
+
