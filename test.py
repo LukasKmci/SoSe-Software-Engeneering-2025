@@ -12,4 +12,5 @@ if __name__ == "__main__":
     experiment.add_supervisor(supervisor)
 
 
-    print(experiment)
+    experiment.print_info()
+
