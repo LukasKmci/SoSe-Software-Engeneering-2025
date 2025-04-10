@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 class Person:
     def __init__(self, first_name, last_name):
         self.first_name = first_name
@@ -8,26 +10,32 @@ class Person:
 
 
 class Subject(Person):
-    def __init__(self, first_name, last_name, sex, age):
+    def __init__(self, first_name, last_name, sex, birthdate_str):
         super().__init__(first_name, last_name)
         self.sex = sex
-        self.age = age
+        self.__birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date()
         self.max_hr = None
 
+    def _calculate_age(self):
+        today = date.today()
+        return today.year - self.__birthdate.year - (
+            (today.month, today.day) < (self.__birthdate.month, self.__birthdate.day)
+        )
+
     def estimate_max_hr(self):
-        self.max_hr = 220 - self.age
+        age = self._calculate_age()
+        self.max_hr = 220 - age
 
     def print_info(self):
         super().print_info()
         print("Sex:", self.sex)
-        print("Age:", self.age)
+        print("Age:", self._calculate_age())
         print("Max HR:", self.max_hr)
 
 
 class Supervisor(Person):
     def __init__(self, first_name, last_name):
         super().__init__(first_name, last_name)
-        
 
 
 class Experiment:
@@ -52,4 +60,5 @@ class Experiment:
         print("\nSubjects:")
         for sub in self.subjects:
             sub.print_info()
+
 
