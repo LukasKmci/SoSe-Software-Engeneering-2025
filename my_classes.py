@@ -1,7 +1,15 @@
-class Subject:
-    def __init__(self, first_name, last_name, sex, age):
+class Person:
+    def __init__(self, first_name, last_name):
         self.first_name = first_name
         self.last_name = last_name
+
+    def print_info(self):
+        print(f"{self.__class__.__name__}:", self.first_name, self.last_name)
+
+
+class Subject(Person):
+    def __init__(self, first_name, last_name, sex, age):
+        super().__init__(first_name, last_name)
         self.sex = sex
         self.age = age
         self.max_hr = None
@@ -10,19 +18,16 @@ class Subject:
         self.max_hr = 220 - self.age
 
     def print_info(self):
-        print("Subject:", self.first_name, self.last_name)
+        super().print_info()
         print("Sex:", self.sex)
         print("Age:", self.age)
         print("Max HR:", self.max_hr)
 
 
-class Supervisor:
+class Supervisor(Person):
     def __init__(self, first_name, last_name):
-        self.first_name = first_name
-        self.last_name = last_name
-
-    def print_info(self):
-        print("Supervisor:", self.first_name, self.last_name)
+        super().__init__(first_name, last_name)
+        
 
 
 class Experiment:
