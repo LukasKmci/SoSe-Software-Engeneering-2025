@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import requests
 
 class Person:
     def __init__(self, first_name, last_name):
@@ -7,6 +8,11 @@ class Person:
 
     def print_info(self):
         print(f"{self.__class__.__name__}:", self.first_name, self.last_name)
+    
+    def put(self, server_url):
+        data = {"first_name": self.first_name}
+        response = requests.post(f"{server_url}/persons", json=data)
+        return response
 
 
 class Subject(Person):
@@ -15,6 +21,7 @@ class Subject(Person):
         self.sex = sex
         self.__birthdate = datetime.strptime(birthdate_str, "%Y-%m-%d").date()
         self.max_hr = None
+        self.email = None
 
     def _calculate_age(self):
         today = date.today()
@@ -25,6 +32,11 @@ class Subject(Person):
     def estimate_max_hr(self):
         age = self._calculate_age()
         self.max_hr = 220 - age
+    
+    def update_email(self, server_url):
+        data = {"email": self.email}
+        response = requests.post(f"{server_url}/persons/{self.first_name}/email", json=data)
+        return response
 
     def print_info(self):
         super().print_info()
@@ -60,5 +72,3 @@ class Experiment:
         print("\nSubjects:")
         for sub in self.subjects:
             sub.print_info()
-
-
